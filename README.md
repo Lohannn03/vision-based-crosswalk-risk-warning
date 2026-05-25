@@ -337,6 +337,7 @@ assets/results/danger_example_3.jpg
 assets/results/high_example_1.jpg
 assets/results/high_example_2.jpg
 assets/results/crosswalk_risk_30s.mp4
+assets/results/crosswalk_risk.mp4
 assets/results/risk_score_timeline.png
 ```
 ### Danger Example
@@ -358,9 +359,7 @@ This repository includes a **30-second demo video** showing the main pipeline an
 **Full 60-second video** is also included in the repository:
 
 #### Full 60-second Video
-<video width="800" controls>
-  <source src="docs/crosswalk_risk.mp4" type="video/mp4">
-</video>
+[▶ Click to watch video](https://github.com/user-attachments/assets/1476dc87-ea7e-4763-93f0-2de724de5af6)
 
 - Both videos contain the English voice warning and risk overlays.
 - The 30-second demo is lightweight for preview, while the full 60-second video shows the complete crosswalk scenario.
@@ -438,11 +437,16 @@ vision-based-crosswalk-risk-warning/
 ├── data/
 │   └── demo/
 │       └── crosswalk_best_60s.mp4
+├── docs/
+│   ├── crosswalk_risk.mp4
+│   └── crosswalk_risk_30s.mp4
+│      
 ├── assets/
 │   └── results/
 │       ├── danger_example_1.jpg
 │       ├── high_example_1.jpg
-|       ├── assets/results/crosswalk_risk.gif
+│       ├── crosswalk_risk.mp4
+│       ├── crosswalk_risk_30s.mp4
 │       └── risk_score_timeline.png
 └── outputs/
     ├── logs/
