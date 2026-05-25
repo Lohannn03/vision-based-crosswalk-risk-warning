@@ -336,7 +336,7 @@ assets/results/danger_example_2.jpg
 assets/results/danger_example_3.jpg
 assets/results/high_example_1.jpg
 assets/results/high_example_2.jpg
-assets/results/crosswalk_risk.gif
+assets/results/crosswalk_risk.mp4
 assets/results/risk_score_timeline.png
 ```
 ### Danger Example
@@ -349,7 +349,7 @@ assets/results/risk_score_timeline.png
 ![Risk score timeline](assets/results/risk_score_timeline.png)
 
 ### Demo Video
-![Crosswalk Risk](assets/results/crosswalk_risk.gif)
+[▶ Click to watch video](assets/results/crosswalk_risk.mp4)
 ---
 
 ## 16. How to Run
