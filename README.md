@@ -349,7 +349,7 @@ assets/results/risk_score_timeline.png
 ![Risk score timeline](assets/results/risk_score_timeline.png)
 
 ### Demo Video
-[▶ Click to watch video](assets/results/crosswalk_risk_30s.mp4)
+[▶ Click to watch video](https://github.com/Lohannn03/vision-based-crosswalk-risk-warning/blob/main/assets/results/crosswalk_risk_30s.mp4)
 
 ---
 
