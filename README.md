@@ -353,9 +353,7 @@ assets/results/risk_score_timeline.png
 This repository includes a **30-second demo video** showing the main pipeline and audio warning functionality:
 
 #### 30-second Demo
-<video width="800" controls>
-  <source src="docs/crosswalk_risk_30s.mp4" type="video/mp4">
-</video>
+[▶ Click to watch video](https://github.com/user-attachments/assets/09d10b2a-ede5-485f-a41a-9c4f02f357b3)
 
 **Full 60-second video** is also included in the repository:
 
