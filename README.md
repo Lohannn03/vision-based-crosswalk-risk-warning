@@ -350,7 +350,7 @@ assets/results/risk_score_timeline.png
 
 ### Demo Video
 <video width="800" controls>
-  <source src="assets/results/crosswalk_risk.mp4" type="video/mp4">
+  <source src="outputs/videos/output_crosswalk_risk_yolo11s_60s_with_voice_h264.mp4" type="video/mp4">
   Your browser does not support the video tag.
 </video>
 
