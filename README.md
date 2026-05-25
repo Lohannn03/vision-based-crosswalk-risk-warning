@@ -349,7 +349,6 @@ assets/results/risk_score_timeline.png
 ![Risk score timeline](assets/results/risk_score_timeline.png)
 
 ### Demo Video
-### Demo Video
 
 This repository includes a **30-second demo video** showing the main pipeline and audio warning functionality:
 
