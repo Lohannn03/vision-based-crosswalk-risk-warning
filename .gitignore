@@ -1,0 +1,39 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+.venv/
+venv/
+env/
+
+# Jupyter / Colab
+.ipynb_checkpoints/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Model weights
+*.pt
+*.onnx
+*.engine
+
+# Temporary audio files
+outputs/temp_audio/
+
+# Large generated videos
+outputs/videos/*.mp4
+outputs/videos/*.avi
+outputs/videos/*.mov
+
+# Keep README files in output folders if needed
+!outputs/videos/README.md
+
+# Logs can be regenerated, but keep final CSV if desired
+# outputs/logs/*.csv
+
+# Screenshots can be regenerated, but selected examples may be kept
+# outputs/screenshots/*.jpg

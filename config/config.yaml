@@ -1,0 +1,49 @@
+project:
+  name: CCTV-based Pedestrian-Vehicle Risk Warning System at Unsignalized Crosswalks
+paths:
+  input_video: data/demo/crosswalk_best_60s.mp4
+  roi_config: config/crosswalk_roi.json
+  output_video: outputs/videos/output_crosswalk_risk_yolo11s_60s.mp4
+  output_video_h264: outputs/videos/output_crosswalk_risk_yolo11s_60s_with_voice_h264.mp4
+  event_log: outputs/logs/event_log_crosswalk_yolo11s_60s.csv
+  frame_log: outputs/logs/frame_log_crosswalk_yolo11s_60s.csv
+  screenshot_dir: outputs/screenshots
+  warning_audio: outputs/videos/warning_audio_voice.wav
+  temp_audio_dir: outputs/temp_audio
+  risk_score_timeline: assets/results/risk_score_timeline.png
+model:
+  name: yolo11s.pt
+  confidence_threshold: 0.25
+  image_size: 960
+  tracker: bytetrack.yaml
+risk:
+  high_distance_px: 140
+  danger_distance_px: 90
+  critical_distance_px: 65
+  distance_decrease_margin: 5
+  history_length: 30
+  screenshot_cooldown_frames: 60
+  display_hold_frames: 45
+risk_score:
+  low_max: 24
+  medium_min: 25
+  high_min: 50
+  danger_min: 75
+  proximity_far_px: 180
+  proximity_high_px: 140
+  proximity_danger_px: 90
+  proximity_critical_px: 65
+  ttc_medium_sec: 3.0
+  ttc_high_sec: 2.0
+  ttc_danger_sec: 1.0
+  slow_closing_px_per_frame: 6
+  fast_closing_px_per_frame: 15
+audio:
+  high_text: Caution. Pedestrian crossing.
+  danger_text: Warning. Vehicle approaching. Please stop.
+  high_cooldown_sec: 4.0
+  danger_cooldown_sec: 3.0
+webcam:
+  source: 0
+  output_video: outputs/videos/webcam_demo_output.mp4
+  show_window: true
