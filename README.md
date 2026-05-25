@@ -79,7 +79,43 @@ The selected scene is an unsignalized crosswalk. Because no traffic light is vis
 
 ---
 
-## 6. Object Detection and Tracking
+## 6. Practical Implementation in Real Life
+
+This project simulates how a real-world unsignalized crosswalk could be enhanced using a vision-based pedestrian-vehicle risk warning system.
+
+### Workflow
+
+1. **CCTV Camera**: Mounted above the crosswalk, continuously monitors pedestrian and vehicle activity.
+2. **CV Pipeline**: YOLO11s + ByteTrack detects and tracks pedestrians and vehicles in real time.
+3. **Risk Assessment**: Calculates image-space surrogate risk score for each pedestrian-vehicle interaction.
+4. **Audio Warning**: If HIGH or DANGER risk is detected, the system plays an English voice warning through a nearby speaker (e.g., "Caution. Pedestrian crossing." or "Warning. Vehicle approaching. Please stop.").
+5. **Monitoring Continues**: If no risk is detected, the system continues monitoring without warnings.
+6. **Event Logging**: All HIGH/DANGER events are logged for later analysis and review.
+
+### Workflow Diagram (Simplified)
+
+```text
+[Pedestrian enters crosswalk]
+          │
+          ▼
+[Camera/CCTV detects pedestrian]
+          │
+          ▼
+[CV pipeline detects vehicles + pedestrians]
+          │
+          ▼
+[Compute image-space risk score]
+          │
+          ▼
+[Risk HIGH/DANGER?] ──► Yes ──► [Play voice warning + overlay on output video]
+          │
+          └───────────► No ──► [No warning, continue monitoring]
+```
+This section illustrates how the prototype **mimics a real unsignalized crosswalk safety system** with real-time detection, risk scoring, and English voice warnings.
+
+---
+
+## 7. Object Detection and Tracking
 
 This project uses YOLO11s for object detection and ByteTrack for multi-object tracking.
 
@@ -96,7 +132,7 @@ The system tracks object IDs across frames and uses the bottom-center point of e
 
 ---
 
-## 7. Crosswalk ROI and Scene Understanding
+## 8. Crosswalk ROI and Scene Understanding
 
 The system uses manually defined regions of interest because the camera view is fixed.
 
@@ -117,7 +153,7 @@ Because this is an unsignalized crosswalk, vehicle presence alone is not treated
 
 ---
 
-## 8. Image-space Surrogate Risk Score
+## 9. Image-space Surrogate Risk Score
 
 The project computes an image-space surrogate risk score from 0 to 100.
 
@@ -132,19 +168,19 @@ risk_score =
   + TTC-like score
   + approach-zone score
 ```
-### 8.1 Pedestrian Exposure
+### 9.1 Pedestrian Exposure
 ```
 No relevant pedestrian                  → low score
 Pedestrian in waiting zone              → medium exposure
 Pedestrian inside crosswalk             → high exposure
 ```
-### 8.2 Minimum Distance
+### 9.2 Minimum Distance
 
 Minimum image-space distance between a pedestrian and a vehicle is used as a proximity indicator.
 
 Smaller distance produces a higher risk contribution.
 
-### 8.3 Closing Speed
+### 9.3 Closing Speed
 
 The system estimates image-space closing speed from tracking history.
 ```
@@ -153,7 +189,7 @@ closing_speed_px_per_frame =
 ```
 If the pedestrian-vehicle distance decreases quickly, the risk score increases.
 
-### 8.4 TTC-like Indicator
+### 9.4 TTC-like Indicator
 
 The system estimates an approximate TTC-like value in image space:
 ```
@@ -162,7 +198,7 @@ ttc_like_sec    = ttc_like_frames / fps
 ```
 This is not a real-world TTC measurement. It is an image-space approximation used for prototype-level risk analysis.
 
-### 8.5 Risk Level Mapping
+### 9.5 Risk Level Mapping
 ```
 0–24    LOW
 25–49   MEDIUM
@@ -172,7 +208,7 @@ This is not a real-world TTC measurement. It is an image-space approximation use
 
 ---
 
-## 9. Risk Logic
+## 10. Risk Logic
 
 The final risk level is derived from the risk score.
 
@@ -190,7 +226,7 @@ Reason: Pedestrian in main_crosswalk and short TTC-like risk detected
 
 ---
 
-## 10. Bird's-eye-view Visualization
+## 11. Bird's-eye-view Visualization
 
 The system includes an approximate bird's-eye-view mini-map using homography.
 
@@ -211,7 +247,7 @@ assets/results/
 
 ---
 
-## 11. Audio Warning Simulation
+## 12. Audio Warning Simulation
 
 When a risk event is detected, the system generates an English voice warning.
 
@@ -231,11 +267,11 @@ outputs/videos/output_crosswalk_risk_yolo11s_60s_with_voice_h264.mp4
 
 ---
 
-## 12. Output Logs
+## 13. Output Logs
 
 The project generates two types of CSV logs.
 
-### 12.1 Event Log
+### 13.1 Event Log
 
 The event log records HIGH and DANGER events.
 ```
@@ -255,7 +291,7 @@ closing_speed_px_per_frame
 reason
 screenshot_path
 ```
-### 12.2 Frame Log
+### 13.2 Frame Log
 
 The frame log records risk status approximately once per second.
 ```
@@ -265,7 +301,7 @@ This log is used to generate the risk-score timeline plot.
 
 ---
 
-## 13. Risk-score Timeline
+## 14. Risk-score Timeline
 
 The system generates a risk-score timeline plot.
 ```
@@ -287,7 +323,7 @@ MEDIUM    12
 
 ---
 
-## 14. Representative Results
+## 15. Representative Results
 
 Representative result images are saved in:
 ```
@@ -300,7 +336,7 @@ assets/results/danger_example_2.jpg
 assets/results/danger_example_3.jpg
 assets/results/high_example_1.jpg
 assets/results/high_example_2.jpg
-assets/results/crosswalk_risk.mp4
+assets/results/crosswalk_risk.gif
 assets/results/risk_score_timeline.png
 ```
 ### Danger Example
@@ -313,16 +349,16 @@ assets/results/risk_score_timeline.png
 ![Risk score timeline](assets/results/risk_score_timeline.png)
 
 ### Demo Video
-![Crosswalk Risk](assets/results/crosswalk_risk.mp4)
+![Crosswalk Risk](assets/results/crosswalk_risk.gif)
 ---
 
-## 15. How to Run
+## 16. How to Run
 
-### 15.1 Install Dependencies
+### 16.1 Install Dependencies
 ```
 pip install -r requirements.txt
 ```
-### 15.2 Run the Full Pipeline
+### 16.2 Run the Full Pipeline
 ```
 python main.py --config config/config.yaml
 ```
@@ -339,7 +375,7 @@ H.264 video export
 risk-score timeline generation
 representative screenshot extraction
 ```
-### 15.3 Run Only the Computer Vision Pipeline
+### 16.3 Run Only the Computer Vision Pipeline
 ```
 python main.py --config config/config.yaml --skip-audio
 ```
@@ -347,7 +383,7 @@ This mode skips voice-warning generation and H.264 audio merging.
 
 ---
  
-## 16. Experimental Real-time Webcam Mode
+## 17. Experimental Real-time Webcam Mode
 
 This repository also includes an experimental webcam mode:
 ```
@@ -369,7 +405,7 @@ Therefore, webcam mode is included as an optional deployment experiment, not as 
 
 ---
 
-## 17. Project Structure
+## 18. Project Structure
 
 ```text
 vision-based-crosswalk-risk-warning/
@@ -391,7 +427,7 @@ vision-based-crosswalk-risk-warning/
 │   └── results/
 │       ├── danger_example_1.jpg
 │       ├── high_example_1.jpg
-|       ├── assets/results/crosswalk_risk.mp4
+|       ├── assets/results/crosswalk_risk.gif
 │       └── risk_score_timeline.png
 └── outputs/
     ├── logs/
@@ -403,7 +439,7 @@ vision-based-crosswalk-risk-warning/
 ```
 ---
 
-## 18. Limitations
+## 19. Limitations
 * The system uses image-space distance, not real-world metric distance.
 * ROI regions are manually defined for the selected fixed CCTV view.
 * Homography is approximate and used mainly for bird's-eye-view visualization.
@@ -415,7 +451,7 @@ vision-based-crosswalk-risk-warning/
 
 ---
 
-## 19. Future Work
+## 20. Future Work
 * Metric homography calibration using real-world crosswalk measurements
 * Real-world vehicle speed estimation in meters per second
 * Post-Encroachment Time estimation using conflict-point crossing times
@@ -428,7 +464,7 @@ vision-based-crosswalk-risk-warning/
 
 --- 
 
-## 20. References
+## 21. References
 * World Health Organization. Global status report on road safety 2023.
 * World Health Organization. Road safety fact sheet.
 * International Transport Forum / OECD. Korea Road Safety Country Profile 2023.
