@@ -349,7 +349,11 @@ assets/results/risk_score_timeline.png
 ![Risk score timeline](assets/results/risk_score_timeline.png)
 
 ### Demo Video
-![▶ Click to watch video](assets/results/crosswalk_risk.mp4)
+<video width="800" controls>
+  <source src="assets/results/crosswalk_risk.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+
 ---
 
 ## 16. How to Run
