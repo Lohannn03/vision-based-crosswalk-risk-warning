@@ -102,12 +102,12 @@ The system uses manually defined regions of interest because the camera view is 
 
 The ROI configuration includes:
 
-- Main crosswalk ROI
-- Secondary crosswalk ROI
-- Vehicle approach zone
-- Secondary vehicle approach zone
-- Pedestrian waiting zone
-- Homography source points for bird's-eye-view visualization
+* Main crosswalk ROI
+* Secondary crosswalk ROI
+* Vehicle approach zone
+* Secondary vehicle approach zone
+* Pedestrian waiting zone
+* Homography source points for bird's-eye-view visualization
 
 The ROI file is located at:
 ```
@@ -176,11 +176,11 @@ This is not a real-world TTC measurement. It is an image-space approximation use
 
 The final risk level is derived from the risk score.
 
-Risk Level	Description
-LOW	No relevant pedestrian in the crosswalk or waiting zone
-MEDIUM	Pedestrian is waiting or moderate surrogate risk is detected
-HIGH	Pedestrian-vehicle interaction has high surrogate risk
-DANGER	Short TTC-like condition, critical proximity, or very high surrogate risk
+Risk Level	| Description
+LOW	        | No relevant pedestrian in the crosswalk or waiting zone
+MEDIUM	    | Pedestrian is waiting or moderate surrogate risk is detected
+HIGH	    | Pedestrian-vehicle interaction has high surrogate risk
+DANGER	    | Short TTC-like condition, critical proximity, or very high surrogate risk
 
 Example overlay:
 ```
@@ -196,11 +196,11 @@ The system includes an approximate bird's-eye-view mini-map using homography.
 
 This visualization helps show the spatial relationship between:
 
-- Pedestrians
-- Vehicles
-- Crosswalk regions
-- Vehicle approach zones
-- Dangerous pedestrian-vehicle pairs
+* Pedestrians
+* Vehicles
+* Crosswalk regions
+* Vehicle approach zones
+* Dangerous pedestrian-vehicle pairs
 
 The homography is used for visualization only. It is not used as certified metric calibration.
 
@@ -300,20 +300,20 @@ assets/results/danger_example_2.jpg
 assets/results/danger_example_3.jpg
 assets/results/high_example_1.jpg
 assets/results/high_example_2.jpg
+assets/results/crosswalk_risk.mp4
 assets/results/risk_score_timeline.png
 ```
-Danger Example
+### Danger Example
 ![Danger example](assets/results/danger_example_1.jpg)
-![Danger example](assets/results/danger_example_2.jpg)
-![Danger example](assets/results/danger_example_3.jpg)
 
-High-risk Example
+### High-risk Example
 ![High example](assets/results/high_example_1.jpg)
-![High example](assets/results/high_example_2.jpg)
 
-Risk-score Timeline
+### Risk-score Timeline
 ![Risk score timeline](assets/results/risk_score_timeline.png)
 
+### Demo Video
+![Crosswalk Risk](assets/results/crosswalk_risk.mp4)
 ---
 
 ## 15. How to Run
@@ -370,6 +370,8 @@ Therefore, webcam mode is included as an optional deployment experiment, not as 
 ---
 
 ## 17. Project Structure
+
+```text
 vision-based-crosswalk-risk-warning/
 ├── README_project.md
 ├── requirements.txt
@@ -388,10 +390,8 @@ vision-based-crosswalk-risk-warning/
 ├── assets/
 │   └── results/
 │       ├── danger_example_1.jpg
-│       ├── danger_example_2.jpg
-│       ├── danger_example_3.jpg
 │       ├── high_example_1.jpg
-│       ├── high_example_2.jpg
+|       ├── assets/results/crosswalk_risk.mp4
 │       └── risk_score_timeline.png
 └── outputs/
     ├── logs/
@@ -400,7 +400,7 @@ vision-based-crosswalk-risk-warning/
     └── videos/
         ├── output_crosswalk_risk_yolo11s_60s_with_voice_h264.mp4
         └── warning_audio_voice.wav
-
+```
 ---
 
 ## 18. Limitations
