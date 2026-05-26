@@ -83,35 +83,55 @@ The selected scene is an unsignalized crosswalk. Because no traffic light is vis
 
 This project simulates how a real-world unsignalized crosswalk could be enhanced using a vision-based pedestrian-vehicle risk warning system.
 
-### Workflow
+In the current prototype, the system analyzes CCTV-style video and generates visual overlays, risk scores, event logs, and simulated English voice warnings. In a practical deployment, the same risk detection logic could be connected to roadside and in-vehicle warning channels.
 
-1. **CCTV Camera**: Mounted above the crosswalk, continuously monitors pedestrian and vehicle activity.
-2. **CV Pipeline**: YOLO11s + ByteTrack detects and tracks pedestrians and vehicles in real time.
-3. **Risk Assessment**: Calculates image-space surrogate risk score for each pedestrian-vehicle interaction.
-4. **Audio Warning**: If HIGH or DANGER risk is detected, the system plays an English voice warning through a nearby speaker (e.g., "Caution. Pedestrian crossing." or "Warning. Vehicle approaching. Please stop.").
-5. **Monitoring Continues**: If no risk is detected, the system continues monitoring without warnings.
-6. **Event Logging**: All HIGH/DANGER events are logged for later analysis and review.
-
-### Workflow Diagram (Simplified)
+### 6.1 Deployment Concept
 
 ```text
-[Pedestrian enters crosswalk]
-          │
-          ▼
-[Camera/CCTV detects pedestrian]
-          │
-          ▼
-[CV pipeline detects vehicles + pedestrians]
-          │
-          ▼
-[Compute image-space risk score]
-          │
-          ▼
-[Risk HIGH/DANGER?] ──► Yes ──► [Play voice warning + overlay on output video]
-          │
-          └───────────► No ──► [No warning, continue monitoring]
+Roadside CCTV Camera
+        │
+        ▼
+Edge Computer / Roadside Server
+        │
+        ▼
+Computer Vision Pipeline
+(YOLO11s + ByteTrack + ROI + Risk Scoring)
+        │
+        ▼
+HIGH / DANGER Risk Event
+        │
+        ├── Roadside speaker warning
+        │     → alerts pedestrians and nearby road users
+        │
+        ├── Driver-facing in-vehicle warning
+        │     → dashcam / navigation / V2X / vehicle app
+        │
+        └── Event logging
+              → CSV logs and screenshots for later analysis
 ```
-This section illustrates how the prototype **mimics a real unsignalized crosswalk safety system** with real-time detection, risk scoring, and English voice warnings.
+
+### 6.2 How the System Operates
+#### 1. A CCTV camera continuously monitors the unsignalized crosswalk.
+#### 2. The CV pipeline detects and tracks pedestrians and vehicles.
+#### 3. The system calculates an image-space surrogate risk score.
+#### 4. If the risk level is HIGH or DANGER, the system triggers a warning event.
+#### 5. The warning can be delivered in two ways:
+         * **Roadside warning**: a speaker near the crosswalk alerts pedestrians and nearby road users.
+         * **In-vehicle warning**: risk information can be sent to a dashcam, navigation system, vehicle app, or V2X-enabled driver alert system.
+#### 6. HIGH and DANGER events are logged for later analysis.
+
+### 6.3 Why In-vehicle Alerts Are Important
+
+A roadside speaker alone may not be sufficient for drivers inside vehicles because closed windows, music, engine noise, and traffic noise can reduce audibility. Therefore, a practical system should treat the speaker warning as a supplementary cue and use direct driver-facing alerts when possible.
+
+For example, the detected risk event could be sent to:
+
+* a dashcam display
+* a navigation system
+* a vehicle mobile app
+* a V2X-based in-vehicle alert system
+
+This project focuses on the computer-vision risk detection and warning simulation part. The in-vehicle alert integration is proposed as a practical deployment extension.
 
 ---
 
@@ -212,11 +232,12 @@ This is not a real-world TTC measurement. It is an image-space approximation use
 
 The final risk level is derived from the risk score.
 
-Risk Level	| Description
-LOW	        | No relevant pedestrian in the crosswalk or waiting zone
-MEDIUM	    | Pedestrian is waiting or moderate surrogate risk is detected
-HIGH	    | Pedestrian-vehicle interaction has high surrogate risk
-DANGER	    | Short TTC-like condition, critical proximity, or very high surrogate risk
+| Risk Level | Description | Current Prototype Output | Practical Deployment Warning |
+|---|---|---|---|
+| LOW | No relevant pedestrian in the crosswalk or waiting zone | No warning overlay | No warning |
+| MEDIUM | Pedestrian is waiting or moderate surrogate risk is detected | Yellow visual overlay and frame-level logging | Usually monitoring only; no active audio warning |
+| HIGH | Pedestrian is crossing or pedestrian-vehicle interaction has high surrogate risk | Orange visual overlay + simulated voice warning in demo video | Roadside speaker can alert pedestrians and nearby road users; driver alert can be delivered through dashcam/navigation/V2X if integrated |
+| DANGER | Short TTC-like condition, critical proximity, or very high surrogate risk | Red visual overlay + stronger simulated voice warning in demo video | Strong roadside warning + direct in-vehicle alert through dashcam/navigation/V2X if available |
 
 Example overlay:
 ```
@@ -249,12 +270,28 @@ assets/results/
 
 ## 12. Audio Warning Simulation
 
-When a risk event is detected, the system generates an English voice warning.
+When a HIGH or DANGER risk event is detected, the system generates an English voice warning.
 
-* HIGH event: `Caution. Pedestrian crossing.`
-* DANGER event: `Warning. Vehicle approaching. Please stop.`
+In the current prototype, the warning is simulated by merging the generated voice audio into the final demo video. Therefore, the demo video shows how the system would behave if it were connected to a real warning device.
 
-The generated voice audio is merged into the final output video to simulate a speaker-based warning system that could be installed near an unsignalized crosswalk.
+### HIGH Event
+
+- Voice message: `Caution. Pedestrian crossing.`
+- Meaning: a pedestrian is crossing or entering the crosswalk.
+- Current prototype output: orange visual overlay and simulated voice warning in the demo video.
+- Practical deployment: a roadside speaker may alert pedestrians and nearby road users. For drivers inside vehicles, a dashcam, navigation system, vehicle app, or V2X-based alert would be more reliable than roadside audio alone.
+
+### DANGER Event
+
+- Voice message: `Warning. Vehicle approaching. Please stop.`
+- Meaning: a vehicle is approaching too closely or too quickly while a pedestrian is in or near the crosswalk.
+- Current prototype output: red visual overlay and stronger simulated voice warning in the demo video.
+- Practical deployment: the system could trigger both roadside warning and direct in-vehicle warning through dashcam/navigation/V2X integration.
+
+### Practical Note
+
+A roadside speaker may not always be audible to drivers inside vehicles because of closed windows, music, engine noise, and traffic noise. Therefore, speaker-based warning should be considered a supplementary warning channel. For direct driver warning, integration with in-vehicle systems such as dashcams, navigation systems, vehicle apps, or V2X devices would be more practical.
+
 
 Generated audio file:
 ```
@@ -462,6 +499,9 @@ vision-based-crosswalk-risk-warning/
 * Multi-camera deployment
 * Weather/nighttime robustness testing
 * Multilingual warning messages
+* Integration with dashcam or navigation systems for direct driver alerts
+* V2X-based driver warning delivery
+* Vehicle app notification system for approaching vehicles
 
 --- 
 
