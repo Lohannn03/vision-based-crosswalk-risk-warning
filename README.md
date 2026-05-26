@@ -213,10 +213,10 @@ This is not a real-world TTC measurement. It is an image-space approximation use
 The final risk level is derived from the risk score.
 
 Risk Level	| Description
-LOW	        | No relevant pedestrian in the crosswalk or waiting zone
-MEDIUM	    | Pedestrian is waiting or moderate surrogate risk is detected
-HIGH	    | Pedestrian-vehicle interaction has high surrogate risk
-DANGER	    | Short TTC-like condition, critical proximity, or very high surrogate risk
+LOW	          | No relevant pedestrian in the crosswalk or waiting zone
+MEDIUM	          | Pedestrian is waiting or moderate surrogate risk is detected
+HIGH	          | Pedestrian-vehicle interaction has high surrogate risk
+DANGER	          | Short TTC-like condition, critical proximity, or very high surrogate risk
 
 Example overlay:
 ```
