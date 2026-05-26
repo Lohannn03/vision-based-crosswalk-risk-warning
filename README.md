@@ -232,12 +232,21 @@ This is not a real-world TTC measurement. It is an image-space approximation use
 
 The final risk level is derived from the risk score.
 
+<<<<<<< HEAD
 | Risk Level | Description | Current Prototype Output | Practical Deployment Warning |
 |---|---|---|---|
 | LOW | No relevant pedestrian in the crosswalk or waiting zone | No warning overlay | No warning |
 | MEDIUM | Pedestrian is waiting or moderate surrogate risk is detected | Yellow visual overlay and frame-level logging | Usually monitoring only; no active audio warning |
 | HIGH | Pedestrian is crossing or pedestrian-vehicle interaction has high surrogate risk | Orange visual overlay + simulated voice warning in demo video | Roadside speaker can alert pedestrians and nearby road users; driver alert can be delivered through dashcam/navigation/V2X if integrated |
 | DANGER | Short TTC-like condition, critical proximity, or very high surrogate risk | Red visual overlay + stronger simulated voice warning in demo video | Strong roadside warning + direct in-vehicle alert through dashcam/navigation/V2X if available |
+=======
+| Risk Level | Description |
+|---|---|
+| LOW | No relevant pedestrian in the crosswalk or waiting zone |
+| MEDIUM | Pedestrian is waiting or moderate surrogate risk is detected |
+| HIGH | Pedestrian-vehicle interaction has high surrogate risk |
+| DANGER | Short TTC-like condition, critical proximity, or very high surrogate risk |
+>>>>>>> 4ffd372843a1f821035adf3455776b01d92c7964
 
 Example overlay:
 ```
