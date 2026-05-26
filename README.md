@@ -246,7 +246,7 @@ The final risk level is derived from the risk score.
 | MEDIUM | Pedestrian is waiting or moderate surrogate risk is detected |
 | HIGH | Pedestrian-vehicle interaction has high surrogate risk |
 | DANGER | Short TTC-like condition, critical proximity, or very high surrogate risk |
->>>>>>> 4ffd372843a1f821035adf3455776b01d92c7964
+>>>>>>> 
 
 Example overlay:
 ```
