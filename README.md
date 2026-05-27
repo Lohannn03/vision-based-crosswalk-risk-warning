@@ -68,7 +68,9 @@ Input CCTV video
 ## 5. Dataset
 
 The input video is a CCTV-style crosswalk video selected from an open dataset source.
-The original video source is: [https://figshare.com/articles/dataset/video_001_avi_video_040_avi/29983897?file=57418396].
+
+The original video source is: 
+[https://figshare.com/articles/dataset/video_001_avi_video_040_avi/29983897?file=57418396].
 
 For this project, a 60-second segment was extracted from a longer crosswalk video and used as the main demo input.
 
