@@ -68,6 +68,7 @@ Input CCTV video
 ## 5. Dataset
 
 The input video is a CCTV-style crosswalk video selected from an open dataset source.
+The original video source is: [https://figshare.com/articles/dataset/video_001_avi_video_040_avi/29983897?file=57418396].
 
 For this project, a 60-second segment was extracted from a longer crosswalk video and used as the main demo input.
 
@@ -111,6 +112,7 @@ HIGH / DANGER Risk Event
 ```
 
 ### 6.2 How the System Operates
+
 1. A CCTV camera continuously monitors the unsignalized crosswalk.
 2. The CV pipeline detects and tracks pedestrians and vehicles.
 3. The system calculates an image-space surrogate risk score.
@@ -178,6 +180,8 @@ Because this is an unsignalized crosswalk, vehicle presence alone is not treated
 The project computes an image-space surrogate risk score from 0 to 100.
 
 The score is inspired by surrogate safety measures such as minimum distance, closing speed, and time-to-collision-like indicators. However, because this prototype does not perform full real-world metric calibration, the score is computed in image space rather than meters.
+
+The 0–100 score is a heuristic prototype-level score designed for this project, not an official traffic safety index.
 
 The risk score combines:
 ```
@@ -270,6 +274,8 @@ assets/results/
 
 ## 12. Audio Warning Simulation
 
+LOW and MEDIUM states are displayed visually and logged, but they do not trigger an active voice warning in the current prototype.
+
 When a HIGH or DANGER risk event is detected, the system generates an English voice warning.
 
 In the current prototype, the warning is simulated by merging the generated voice audio into the final demo video. Therefore, the demo video shows how the system would behave if it were connected to a real warning device.
@@ -290,7 +296,7 @@ In the current prototype, the warning is simulated by merging the generated voic
 
 ### Practical Note
 
-A roadside speaker may not always be audible to drivers inside vehicles because of closed windows, music, engine noise, and traffic noise. Therefore, speaker-based warning should be considered a supplementary warning channel. For direct driver warning, integration with in-vehicle systems such as dashcams, navigation systems, vehicle apps, or V2X devices would be more practical.
+A roadside speaker may not always be audible to drivers inside vehicles because of closed windows, music, engine noise, and traffic noise. Therefore, speaker-based warning should be considered a supplementary warning channel. For direct driver warning, integration with in-vehicle systems such as dashcams, navigation systems, vehicle apps, or V2X devices would be more practical. The current project does not implement real hardware communication with dashcams, navigation systems, or V2X devices; these are proposed deployment extensions.
 
 
 Generated audio file:
@@ -369,24 +375,23 @@ assets/results/
 Example files:
 ```
 assets/results/danger_example_1.jpg
-assets/results/danger_example_2.jpg
-assets/results/danger_example_3.jpg
 assets/results/high_example_1.jpg
-assets/results/high_example_2.jpg
 assets/results/crosswalk_risk.mp4
 assets/results/risk_score_timeline.png
 ```
 ### Danger Example
 ![Danger example](assets/results/danger_example_1.jpg)
 
-### High-risk Example
+### High Example
 ![High example](assets/results/high_example_1.jpg)
 
 ### Risk-score Timeline
 ![Risk score timeline](assets/results/risk_score_timeline.png)
 
 ### Demo Video
-[▶ Click to watch video](https://github.com/user-attachments/assets/52e6cc6d-e571-47da-ba9a-b3418d3306b2)
+[▶ Click to watch the full 60-second demo video](https://github.com/user-attachments/assets/52e6cc6d-e571-47da-ba9a-b3418d3306b2)
+
+This video demonstrates the full crosswalk scenario with risk overlays, bird's-eye-view visualization, and English voice warnings.
 
 ---
 
@@ -478,42 +483,65 @@ vision-based-crosswalk-risk-warning/
 ---
 
 ## 19. Limitations
+* The current prototype estimates image-space closing speed, but it does not measure real vehicle speed in meters per second or kilometers per hour.
+* Real-world speed measurement would require metric calibration or additional sensors such as radar, LiDAR, induction loops, or two-point average-speed measurement.
 * The system uses image-space distance, not real-world metric distance.
 * ROI regions are manually defined for the selected fixed CCTV view.
 * Homography is approximate and used mainly for bird's-eye-view visualization.
 * The TTC-like value is an image-space approximation, not a calibrated physical TTC.
 * The system may be affected by occlusion, lighting changes, and small distant pedestrians.
 * YOLO may produce false positives or miss objects in difficult conditions.
-* Voice warning is simulated and not connected to real speaker hardware.
+* Voice warning is simulated and not connected to real speaker hardware, dashcam systems, navigation systems, or V2X devices.
 * Webcam mode requires camera-specific ROI calibration for full risk scoring.
 
 ---
 
 ## 20. Future Work
+
 * Metric homography calibration using real-world crosswalk measurements
-* Real-world vehicle speed estimation in meters per second
+* Real-world vehicle speed estimation in meters per second or kilometers per hour
+* Radar, LiDAR, or two-point average-speed camera integration for more reliable speed estimation
 * Post-Encroachment Time estimation using conflict-point crossing times
 * Automatic crosswalk segmentation
 * More robust pedestrian trajectory prediction
 * Real IoT speaker integration
-* Multi-camera deployment
-* Weather/nighttime robustness testing
-* Multilingual warning messages
 * Integration with dashcam or navigation systems for direct driver alerts
 * V2X-based driver warning delivery
 * Vehicle app notification system for approaching vehicles
+* Multi-camera deployment
+* Weather/nighttime robustness testing
+* Multilingual warning messages
 
 --- 
 
 ## 21. References
-* World Health Organization. Global status report on road safety 2023.
-* World Health Organization. Road safety fact sheet.
-* International Transport Forum / OECD. Korea Road Safety Country Profile 2023.
-* Seoul Metropolitan Government. Seoul’s Traffic Mortality Hit a Record Low in 2023.
-* Seoul Metropolitan Government. Seoul Expands Installation of Diagonal Crosswalks After 18% Drop in Traffic Accidents.
-* Noh et al. Analysis of Vehicle–Pedestrian Interactive Behaviors near Unsignalized Crosswalks.
-* Ultralytics YOLO documentation.
-* ByteTrack tracking through Ultralytics.
-* OpenCV documentation.
-* gTTS documentation.
-* pydub documentation.
+
+* World Health Organization. Global status report on road safety 2023.  
+  https://www.who.int/teams/social-determinants-of-health/safety-and-mobility/global-status-report-on-road-safety-2023
+
+* World Health Organization. Road traffic injuries fact sheet.  
+  https://www.who.int/news-room/fact-sheets/detail/road-traffic-injuries
+
+* International Transport Forum / OECD. Korea Road Safety Country Profile 2023.  
+  https://www.itf-oecd.org/sites/default/files/korea-road-safety.pdf
+
+* Seoul Metropolitan Government. Seoul's Traffic Mortality Hit a Record Low in 2023.  
+  https://english.seoul.go.kr/seouls-traffic-mortality-hit-a-record-low-in-2023-dropping-below-2-fatalities-per-100000-capita-for-the-first-time-among-local-governments/
+
+* Seoul Metropolitan Government. Seoul Expands Installation of Diagonal Crosswalks After 18% Drop in Traffic Accidents.  
+  https://english.seoul.go.kr/seoul-expands-installation-of-diagonal-crosswalks-after-18-drop-in-traffic-accidents/
+
+* Ultralytics YOLO documentation.  
+  https://docs.ultralytics.com/
+
+* ByteTrack: Multi-Object Tracking by Associating Every Detection Box.  
+  https://github.com/ifzhang/ByteTrack
+  
+* OpenCV documentation.  
+  https://docs.opencv.org/
+
+* gTTS documentation.  
+  https://gtts.readthedocs.io/
+
+* pydub documentation.  
+  https://github.com/jiaaro/pydub
